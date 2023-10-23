@@ -5,6 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -33,8 +36,27 @@ class RegisterFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_register, container, false)
+        val fragmentRegister = inflater.inflate(R.layout.fragment_register, container, false)
+        val btnRegister = fragmentRegister.findViewById<Button>(R.id.btn_to_login_tab)
+        val username = fragmentRegister.findViewById<EditText>(R.id.regis_username)
+        val email = fragmentRegister.findViewById<EditText>(R.id.regis_email)
+        val phone = fragmentRegister.findViewById<EditText>(R.id.regis_phone)
+        val password = fragmentRegister.findViewById<EditText>(R.id.regis_password)
+
+        btnRegister.setOnClickListener{
+            MainActivity.EXTRA_USERNAME = username.text.toString()
+            MainActivity.EXTRA_EMAIL = email.text.toString()
+            MainActivity.EXTRA_PHONE = phone.text.toString()
+            MainActivity.EXTRA_PASSWORD = password.text.toString()
+            var abc = MainActivity.EXTRA_USERNAME
+            var def = MainActivity.EXTRA_PASSWORD
+            username.setText("")
+            email.setText("")
+            phone.setText("")
+            password.setText("")
+            Toast.makeText(activity, "Berhasil Menyimpan data $abc dan $def", Toast.LENGTH_SHORT).show()
+        }
+        return fragmentRegister
     }
 
     companion object {

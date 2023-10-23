@@ -1,10 +1,14 @@
 package com.example.pertemuan_9_2
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,7 +38,30 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login, container, false)
+        val fragmentLogin = inflater.inflate(R.layout.fragment_login, container, false)
+        val btnLogin = fragmentLogin.findViewById<Button>(R.id.btn_to_home_page)
+        val username = fragmentLogin.findViewById<EditText>(R.id.login_username)
+        val password = fragmentLogin.findViewById<EditText>(R.id.login_password)
+        val savedUsername = MainActivity.EXTRA_USERNAME
+        val savedEmail = MainActivity.EXTRA_EMAIL
+        val savedPhone = MainActivity.EXTRA_PHONE
+        val savedPassword = MainActivity.EXTRA_PASSWORD
+
+        btnLogin.setOnClickListener{
+            if (username.text.toString() == savedUsername && password.text.toString() == savedPassword) {
+                val intentToSecondActivity = Intent(activity, SecondActivity::class.java)
+                intentToSecondActivity.putExtra("PASSING_USERNAME", savedUsername)
+                intentToSecondActivity.putExtra("PASSING_EMAIL", savedEmail)
+                intentToSecondActivity.putExtra("PASSING_PHONE", savedPhone)
+                intentToSecondActivity.putExtra("PASSING_PASSWORD", savedPassword)
+                startActivity(intentToSecondActivity)
+            }
+            else {
+                Toast.makeText(activity, "Username/Password salah seharusnya $savedUsername dan $savedPassword", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        return fragmentLogin
     }
 
     companion object {
